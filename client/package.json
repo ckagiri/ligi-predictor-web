@@ -3,9 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
+    "history": "^4.7.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
-    "react-scripts": "1.1.5"
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-first-router": "0.0.16-next",
+    "redux-first-router-link": "^1.4.2",
+    "redux-observable": "^1.0.0",
+    "redux-persist": "^5.10.0",
+    "redux-vertical": "^1.1.2",
+    "reselect": "^3.0.1",
+    "rxjs": "^6.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
