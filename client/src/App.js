@@ -1,21 +1,68 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+import ns from './ns.json';
+import {
+  appMounted,
+  fetchUser,
+
+  isSignedInSelector
+} from './redux';
+
+const mapDispatchToProps = {
+  appMounted,
+  fetchUser
+};
+
+const mapStateToProps = state => {
+  const isSignedIn = isSignedInSelector(state);
+  const route = mainRouteSelector(state);
+  return {
+    toast: state.app.toast,
+    isSignedIn,
+    route
+  };
+};
+
+import Nav from './Nav';
+import NotFound from './NotFound';
+import { mainRouteSelector } from './routes/redux';
+import Settings from './routes/Settings';
+
+const mapDispatchToProps = {
+  appMounted,
+  fetchUser
+};
+
+const routes = {
+  settings: Settings
+};
+
+class IgilPredictor extends Component {
+  componentDidMount() {
+    this.props.appMounted();
+    this.props.fetchUser();
+  }
+
   render() {
+    const {
+      route
+    } = this.props;
+    const Child = routes[route] || NotFound;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className={ `${ns}-container` }>
+        <Nav />
+        <Child />
       </div>
     );
   }
 }
 
-export default App;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IgilPredictor);

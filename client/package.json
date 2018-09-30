@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "debug": "^4.0.1",
+    "formik": "^1.3.0",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
@@ -18,6 +20,7 @@
     "redux": "^4.0.0",
     "redux-first-router": "0.0.16-next",
     "redux-first-router-link": "^1.4.2",
+    "redux-form": "^7.4.2",
     "redux-observable": "^1.0.0",
     "redux-persist": "^5.10.0",
     "redux-vertical": "^1.1.2",
