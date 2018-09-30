@@ -7,7 +7,7 @@ import { combineReducers } from 'redux-vertical';
 import { createEpic } from 'redux-epic';
 import appReducer from './reducer.js';
 import routesMap from './routes-map.js';
-import epics from './epics';
+import epics from './_epics.js';
 
 import servicesCreator from './utils/services-creator';
 
