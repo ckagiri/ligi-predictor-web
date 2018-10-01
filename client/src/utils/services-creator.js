@@ -1,4 +1,4 @@
-import { Observable, Disposable } from 'rx';
+import { Observable, Disposable } from 'rxjs';
 import Fetchr from 'fetchr';
 
 function callbackObserver(observer) {

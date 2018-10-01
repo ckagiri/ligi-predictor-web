@@ -1,1 +1,1 @@
-export { default } from './Update-Email.jsx';
+export { default } from './Update-Email';

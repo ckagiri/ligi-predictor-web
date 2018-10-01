@@ -27,10 +27,10 @@ export const onRouteSettings = createAction(types.onRouteSettings);
 export const onRouteUpdateEmail = createAction(types.onRouteUpdateEmail);
 
 export const updateMyEmail = createAction(types.updateMyEmail.start);
-export const updateMyEmailComplete = createActionWithFlash(
+export const updateMyEmailComplete = createAction(
   types.updateMyEmail.complete
 );
-export const updateMyEmailError = createActionWithFlash(
+export const updateMyEmailError = createAction(
   types.updateMyEmail.error
 );
 

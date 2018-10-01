@@ -1,5 +1,5 @@
 import { flow, identity } from 'lodash';
-import { Observable } from 'rx';
+import { Observable } from 'rxjs';
 import {
   combineActions,
   createAction,
@@ -12,8 +12,7 @@ import { createSelector } from 'reselect';
 import fetchUserEpic from './fetch-user-epic.js';
 
 import { paramsSelector } from '../Router/redux';
-import { types as map } from '../Map/redux';
-
+import { entitiesSelector} from '../entities';
 import ns from '../ns.json';
 
 export const epics = [

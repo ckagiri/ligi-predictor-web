@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NotFound } from './NotFound';
+import { mainRouteSelector } from './routes/redux';
+import Settings from './routes/Settings';
 
 import logo from './logo.svg';
 import './App.css';
@@ -28,16 +31,6 @@ const mapStateToProps = state => {
   };
 };
 
-import Nav from './Nav';
-import NotFound from './NotFound';
-import { mainRouteSelector } from './routes/redux';
-import Settings from './routes/Settings';
-
-const mapDispatchToProps = {
-  appMounted,
-  fetchUser
-};
-
 const routes = {
   settings: Settings
 };
@@ -55,7 +48,6 @@ class IgilPredictor extends Component {
     const Child = routes[route] || NotFound;
     return (
       <div className={ `${ns}-container` }>
-        <Nav />
         <Child />
       </div>
     );

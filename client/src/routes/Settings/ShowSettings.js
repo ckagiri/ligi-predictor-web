@@ -1,7 +1,7 @@
 import React from 'react';
-
+import {connect} from 'react-redux'
 import { showUpdateEmailViewSelector } from './redux';
-import Settings from './Settings.jsx';
+import Settings from './Settings';
 import UpdateEmail from './routes/update-email';
 
 const mapStateToProps = state => ({
