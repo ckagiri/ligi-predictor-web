@@ -12,6 +12,5 @@ export default {
     }
     routes[type] = newRoute;
     return routes;
-  }, {}),
-  [types.routeOnHome]: '/'
+  }, {})
 };

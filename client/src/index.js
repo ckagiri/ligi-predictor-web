@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import {
   compose,
   createStore as reduxCreateStore,
-  combineReducers,
   applyMiddleware
 } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { selectLocationState, connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
+import { combineReducers, addNS } from 'redux-vertical';
 
 import appReducer from './reducer.js';
 import routesMap from './routes-map.js';
@@ -34,7 +34,8 @@ const {
   enhancer: routesEnhancer
 } = connectRoutes(history, routesMap);
 
-routesReducer.toString = () => 'location';
+addNS('location', routesReducer);
+//routesReducer.toString = () => 'location';
 
 const enhancer = compose(
   routesEnhancer,
@@ -44,6 +45,7 @@ const enhancer = compose(
   )
 );
 
+//const reducer = ({ appReducer, location: routesReducer })
 const reducer = combineReducers(
   appReducer, routesReducer
 );

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NotFound } from './NotFound';
 import { mainRouteSelector } from './routes/redux';
 import Settings from './routes/Settings';
+import Home from './routes/Home';
 
 import logo from './logo.svg';
 import './App.css';
@@ -32,7 +33,8 @@ const mapStateToProps = state => {
 };
 
 const routes = {
-  settings: Settings
+  settings: Settings,
+  home: Home
 };
 
 class IgilPredictor extends Component {
