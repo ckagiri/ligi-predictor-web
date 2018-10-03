@@ -1,5 +1,5 @@
 import { flow, identity } from 'lodash';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import {
   combineActions,
   createAction,
@@ -9,14 +9,18 @@ import {
 } from 'redux-vertical';
 import { createSelector } from 'reselect';
 
-import fetchUserEpic from './fetch-user-epic.js';
+import fetchMatchesEpic from './fetch-matches-epic';
+import fetchUserEpic from './fetch-user-epic';
 
 import { paramsSelector } from '../Router/redux';
 import { entitiesSelector} from '../entities';
 import ns from '../ns.json';
+import hardGoToEpic from './hard-go-to-epic';
 
 export const epics = [
-  fetchUserEpic
+  fetchUserEpic,
+  fetchMatchesEpic,
+  hardGoToEpic
 ];
 
 export const types = createTypes([
@@ -25,29 +29,32 @@ export const types = createTypes([
   'appMounted',
 
   createAsyncTypes('fetchUser'),
+  'noUserFound',
+
   'showSignIn',
 
   'handleError',
   'hardGoTo'
 ], ns);
 
-
 export const onRouteHome = createAction(types.onRouteHome);
 export const appMounted = createAction(types.appMounted);
 
-export const fetchUser = createAction(types.fetchUser);
+export const fetchUser = createAction(types.fetchUser.start);
 export const fetchUserComplete = createAction(
   types.fetchUser.complete,
   ({ result }) => result,
   identity
 );
+export const noUserFound = createAction(types.noUserFound);
+
 
 export const showSignIn = createAction(types.showSignIn);
 
 // hardGoTo(path: String) => Action
 export const hardGoTo = createAction(types.hardGoTo);
 
-export const createErrorObservable = error => Observable.just({
+export const createErrorObservable = error => of({
   type: types.handleError,
   error
 });
@@ -55,7 +62,7 @@ export const createErrorObservable = error => Observable.just({
 // doActionOnError(
 //   actionCreator: (() => Action|Null)
 // ) => (error: Error) => Observable[Action]
-export const doActionOnError = actionCreator => error => Observable.of(
+export const doActionOnError = actionCreator => error => of(
   {
     type: types.handleError,
     error

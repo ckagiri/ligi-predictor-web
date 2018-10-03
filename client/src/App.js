@@ -39,7 +39,7 @@ const routes = {
 
 class IgilPredictor extends Component {
   componentDidMount() {
-    this.props.appMounted();
+    //this.props.appMounted();
     this.props.fetchUser();
   }
 

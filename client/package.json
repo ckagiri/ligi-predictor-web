@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "browser-cookies": "^1.2.0",
     "classnames": "^2.2.6",
     "debug": "^4.0.1",
     "fetchr": "^0.5.37",
