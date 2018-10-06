@@ -26,20 +26,19 @@ export class AuthService {
     });
   }
 
+  getCurrentUser$() {
+    
+  }
+
   login(userName, password) {
     this.currentUser = {
       id: 2,
       userName: userName,
       isAdmin: false
     };
-    this.currentUser$.next(this.currentUser);
-    return of(true).pipe(
-      delay(1000)
-      // .do((val: boolean) => {
-      //   this.isLoggedIn = true;
-      //   console.log(this.isLoggedIn);
-      // });
-    );
+    setTimeout(() => {
+      this.currentUser$.next(this.currentUser);
+    }, 3000)
   }
 
   logout() {

@@ -10,15 +10,14 @@ import {
 import { createSelector } from 'reselect';
 
 import fetchMatchesEpic from './fetch-matches-epic';
-import fetchUserEpic from './fetch-user-epic';
+import loadUserEpic from './user-epics';
 
 import { paramsSelector } from '../Router/redux';
-import { entitiesSelector} from '../entities';
 import ns from '../ns.json';
 import hardGoToEpic from './hard-go-to-epic';
 
 export const epics = [
-  fetchUserEpic,
+  loadUserEpic,
   fetchMatchesEpic,
   hardGoToEpic
 ];
@@ -28,7 +27,7 @@ export const types = createTypes([
 
   'appMounted',
 
-  createAsyncTypes('fetchUser'),
+  createAsyncTypes('loadUser'),
   'noUserFound',
 
   'showSignIn',
@@ -40,18 +39,10 @@ export const types = createTypes([
 export const onRouteHome = createAction(types.onRouteHome);
 export const appMounted = createAction(types.appMounted);
 
-export const fetchUser = createAction(types.fetchUser.start);
-export const fetchUserComplete = createAction(
-  types.fetchUser.complete,
-  ({ result }) => result,
-  identity
-);
+export const loadUser = createAction(types.loadUser.start);
+export const loadUserComplete = createAction(types.loadUser.complete);
 export const noUserFound = createAction(types.noUserFound);
 
-
-export const showSignIn = createAction(types.showSignIn);
-
-// hardGoTo(path: String) => Action
 export const hardGoTo = createAction(types.hardGoTo);
 
 export const createErrorObservable = error => of({
@@ -80,34 +71,15 @@ const defaultState = {
 };
 
 export const getNS = state => state[ns];
-export const csrfSelector = state => getNS(state).csrfToken;
-export const titleSelector = state => getNS(state).title;
-
-export const signInLoadingSelector = state => !getNS(state).isSignInAttempted;
-
-export const usernameSelector = state => getNS(state).user || '';
-export const userSelector = createSelector(
-  state => getNS(state).user,
-  state => entitiesSelector(state).user,
-  (username, userMap) => userMap[username] || {}
-);
-
-export const userByNameSelector = state => {
-  const username = paramsSelector(state).username;
-  const userMap = entitiesSelector(state).user;
-  return userMap[username] || {};
-};
-
-export const isSignedInSelector = state => !!userSelector(state).username;
 
 export default handleActions(
   () => ({
-    [types.fetchUser.complete]: (state, { payload: user }) => ({
+    [types.loadUser.complete]: (state, { payload: user }) => ({
       ...state,
       user
     }),
     [
-      combineActions(types.showSignIn, types.fetchUser.complete)
+      combineActions(types.showSignIn, types.loadUser.complete)
     ]: state => ({
       ...state,
       isSignInAttempted: true

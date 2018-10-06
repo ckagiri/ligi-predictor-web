@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "leagueId": 1,
+    "name": "2018-2019",
+    "slug": "18-19",
+    "year": "2019",
+    "currentRound": 8,
+    "numberOfRounds": 38,
+    "numberOfTeams": 20,
+    "numberOfGames": 380,
+    "seasonStart": "2018-08-11T00:00:00+0200",
+    "seasonEnd": "2019-05-13T00:00:00+0200"
+  },
+  {
+    "id": 2,
+    "leagueId": 1,
+    "name": "2017-2018",
+    "slug": "17-18",
+    "year": "2018",
+    "currentRound": 8,
+    "numberOfRounds": 38,
+    "numberOfTeams": 20,
+    "numberOfGames": 380,
+    "seasonStart": "2017-08-11T00:00:00+0200",
+    "seasonEnd": "2018-05-13T00:00:00+0200"
+  },
+  {
+    "id": 3,
+    "leagueId": 1,
+    "name": "2016-2017",
+    "slug": "16-17",
+    "year": "2017",
+    "currentRound": 8,
+    "numberOfRounds": 38,
+    "numberOfTeams": 20,
+    "numberOfGames": 380,
+    "seasonStart": "2017-08-11T00:00:00+0200",
+    "seasonEnd": "2018-05-13T00:00:00+0200"
+  }
+]

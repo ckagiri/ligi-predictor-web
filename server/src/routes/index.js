@@ -18,4 +18,7 @@ module.exports = function(app) {
       const json = jsonFileService.getJsonFromFile(data + 'leagues.json');
       res.send(json);
   }
+
+
+  
 };

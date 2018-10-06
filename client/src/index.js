@@ -37,7 +37,9 @@ const {
 addNS('location', routesReducer);
 //routesReducer.toString = () => 'location';
 
-const enhancer = compose(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const enhancer = composeEnhancers(
   routesEnhancer,
   applyMiddleware(
     routesMiddleware,
@@ -45,7 +47,6 @@ const enhancer = compose(
   )
 );
 
-//const reducer = ({ appReducer, location: routesReducer })
 const reducer = combineReducers(
   appReducer, routesReducer
 );

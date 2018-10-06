@@ -3,44 +3,34 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NotFound } from './NotFound';
 import { mainRouteSelector } from './routes/redux';
-import Settings from './routes/Settings';
-import Home from './routes/Home';
-
-import logo from './logo.svg';
-import './App.css';
+import Home from './Home';
 
 import ns from './ns.json';
 import {
   appMounted,
-  fetchUser,
-
-  isSignedInSelector
+  loadUser,
 } from './redux';
 
 const mapDispatchToProps = {
   appMounted,
-  fetchUser
+  loadUser
 };
 
 const mapStateToProps = state => {
-  const isSignedIn = isSignedInSelector(state);
   const route = mainRouteSelector(state);
   return {
-    toast: state.app.toast,
-    isSignedIn,
     route
   };
 };
 
 const routes = {
-  settings: Settings,
   home: Home
 };
 
 class IgilPredictor extends Component {
   componentDidMount() {
-    //this.props.appMounted();
-    this.props.fetchUser();
+    this.props.appMounted();
+    this.props.loadUser();
   }
 
   render() {
