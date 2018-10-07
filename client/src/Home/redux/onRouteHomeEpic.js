@@ -2,17 +2,19 @@ import { ofType, combineEpics } from 'redux-observable';
 import { types } from './';
 import {
   tap,
-  map,
+  map
 } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 import { push, redirect } from 'redux-first-router';
+import { onRouteMatches } from '../../Matches/redux';
 
 function onRouteHomeEpic(action$) {
   return action$.pipe(
-    tap((action) => console.log('homeEpic', action)),
     ofType(types.onRouteHome),
+    tap((action) => console.log('homeEpic', action)),
     map(() => {
-      debugger
-      push('/matches')
+      return onRouteMatches()
     })
   )
 }

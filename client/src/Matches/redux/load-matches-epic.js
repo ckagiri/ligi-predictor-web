@@ -3,7 +3,7 @@ import { of } from 'rxjs/observable/of';
 import { merge } from 'rxjs/observable/merge';
 import { ofType, combineEpics } from 'redux-observable';
 import { createErrorObservable } from '../../redux';
-import { types } from './';
+import { types } from '.';
 import {
   switchMap,
   tap,
@@ -17,18 +17,17 @@ import {
 import { ajax } from 'rxjs/ajax'
 import { push, redirect } from 'redux-first-router';
 
-function fetchMatchesEpic(action$) {
+function loadMatchesEpic(action$) {
   return action$.pipe(
-    tap(action => console.log('fethmathes', action)),
-    ofType(types.appMounted),
-    tap(_ => console.log('appmounted')),
+    ofType(types.loadMatches),
+    tap(_ => console.log('loadMatches')),
     delay(1000),
     map(res => {
-      return { type: 'fetchMatchesComplete', payload: [] }
+      return { type: 'loadMatchesComplete', payload: [] }
     }),
     catchError(createErrorObservable)
   )
 }
 
 
-export default combineEpics(fetchMatchesEpic)
+export default combineEpics(loadMatchesEpic)

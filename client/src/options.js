@@ -8,8 +8,9 @@ import { redirect } from 'redux-first-router'
 export default {
   querySerializer,
   onBeforeChange: (dispatch, getState, action) => {
-    console.log('onBeforeChange')
     const { user, location: { routesMap } } = getState()
+    console.log('onBeforeChange', getState().location)
+
     const allowed = isAllowed(action.type, user, routesMap)
 
     if (!allowed) {
@@ -18,7 +19,7 @@ export default {
     }
   },
   onAfterChange: (dispatch, getState) => {
-    console.log('onAfterChange')
+    console.log('onAfterChange', getState().location)
 
     const { type } = getState().location
 

@@ -12,14 +12,11 @@ import { paramsSelector } from './Router/redux';
 import { querySelector } from './Router/redux';
 import { selectLocationState } from 'redux-first-router';
 
-
 import {
-  appMounted,
   loadUser,
 } from './redux';
 
 const mapDispatchToProps = {
-  appMounted,
   loadUser
 };
 
@@ -29,10 +26,7 @@ const mapStateToProps = state => {
   const params = paramsSelector(state);
   const query = querySelector(state);
   const routesMap = routesMapSelector(state);
-  const locatioin = selectLocationState(state);
-
-
-
+  const location = selectLocationState(state);
   return {
     route
   };
@@ -40,7 +34,6 @@ const mapStateToProps = state => {
 
 class IgilPredictor extends Component {
   componentDidMount() {
-    this.props.appMounted();
     this.props.loadUser();
   }
 

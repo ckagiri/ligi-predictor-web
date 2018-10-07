@@ -22,8 +22,6 @@ export const epics = [
 ];
 
 export const types = createTypes([
-  'appMounted',
-
   createAsyncTypes('loadUser'),
   'noUserFound',
 
@@ -32,8 +30,6 @@ export const types = createTypes([
   'handleError',
   'hardGoTo'
 ], ns);
-
-export const appMounted = createAction(types.appMounted);
 
 export const loadUser = createAction(types.loadUser.start);
 export const loadUserComplete = createAction(types.loadUser.complete);

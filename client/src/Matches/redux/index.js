@@ -5,21 +5,24 @@ import {
   handleActions  } from 'redux-vertical';
 import { isLocationAction } from 'redux-first-router';
 
-import fetchMatchesEpic from './fetch-matches-epic';
+import loadMatchesEpic from './load-matches-epic';
 
 export const epics = [
-  fetchMatchesEpic
+  loadMatchesEpic
 ];
 
 export const ns = 'matches';
 export const types = createTypes([ 
-  'onRouteMatches' ], ns);
+  'onRouteMatches',
+  'loadMatches',
+], ns);
 
 export const routesMap = {
   [types.onRouteMatches]: '/matches',
 };
 
 export const onRouteMatches = createAction(types.onRouteMatches);
+export const loadMatches = createAction(types.loadMatches);
 
 const defaultState = {
   validating: false
@@ -31,8 +34,6 @@ export default composeReducers(
     if (isLocationAction(action)) {
       const { type } = action;
       if (type === types.onRouteMatches) {
-        console.log('action', action)
-        console.log('matchesroutereducer')
         return state
       }
     }
