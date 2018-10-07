@@ -11,12 +11,13 @@ import { selectLocationState, connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import { combineReducers, addNS } from 'redux-vertical';
 
+import options from './options'
 import appReducer from './reducer.js';
 import routesMap from './routes-map.js';
 import epics from './epics.js';
 import App from './App';
 
-const rootEpic = combineEpics( ...epics);
+const rootEpic = combineEpics(...epics);
 
 const epicMiddleware = createEpicMiddleware({
   dependencies: {
@@ -32,7 +33,7 @@ const {
   reducer: routesReducer,
   middleware: routesMiddleware,
   enhancer: routesEnhancer
-} = connectRoutes(history, routesMap);
+} = connectRoutes(history, routesMap, options);
 
 addNS('location', routesReducer);
 //routesReducer.toString = () => 'location';

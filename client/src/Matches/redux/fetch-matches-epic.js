@@ -5,7 +5,7 @@ import { ofType } from 'redux-observable';
 import {
   types,
   createErrorObservable
-} from './';
+} from '../../redux';
 import {
   switchMap,
   tap,

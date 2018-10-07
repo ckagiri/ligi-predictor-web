@@ -9,16 +9,15 @@ import {
 } from 'redux-vertical';
 import { createSelector } from 'reselect';
 
-import fetchMatchesEpic from './fetch-matches-epic';
 import loadUserEpic from './user-epics';
 
 import { paramsSelector } from '../Router/redux';
-import ns from '../ns.json';
 import hardGoToEpic from './hard-go-to-epic';
+
+const ns = 'app';
 
 export const epics = [
   loadUserEpic,
-  fetchMatchesEpic,
   hardGoToEpic
 ];
 

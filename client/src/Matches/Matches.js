@@ -1,8 +1,8 @@
 import React from 'react';
-export default function Home() {
+export default function Matches() {
   return (
     <div>Ligi Predictor</div>
   );
 }
 
-Home.displayName = 'Home';
+Matches.displayName = 'Matches';

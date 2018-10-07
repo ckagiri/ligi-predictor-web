@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NotFound } from './NotFound';
-import { mainRouteSelector } from './routes/redux';
-import Home from './Home';
 
-import ns from './ns.json';
+import { nsToComponent } from './routes';
+import { mainRouterSelector } from './routes/redux';
+
+
+import { routesMapSelector } from './Router/redux';
+import { paramsSelector } from './Router/redux';
+import { querySelector } from './Router/redux';
+import { selectLocationState } from 'redux-first-router';
+
+
 import {
   appMounted,
   loadUser,
@@ -17,14 +24,18 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => {
-  const route = mainRouteSelector(state);
+
+  const route = mainRouterSelector(state);
+  const params = paramsSelector(state);
+  const query = querySelector(state);
+  const routesMap = routesMapSelector(state);
+  const locatioin = selectLocationState(state);
+
+
+
   return {
     route
   };
-};
-
-const routes = {
-  home: Home
 };
 
 class IgilPredictor extends Component {
@@ -37,9 +48,9 @@ class IgilPredictor extends Component {
     const {
       route
     } = this.props;
-    const Child = routes[route] || NotFound;
+    const Child = nsToComponent[route] || NotFound;
     return (
-      <div className={ `${ns}-container` }>
+      <div className={ `container` }>
         <Child />
       </div>
     );
