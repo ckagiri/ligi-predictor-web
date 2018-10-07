@@ -2,6 +2,7 @@ import {
   composeReducers,
   createAction,
   createTypes,
+  createAsyncTypes,
   handleActions  } from 'redux-vertical';
 import { isLocationAction } from 'redux-first-router';
 
@@ -14,7 +15,7 @@ export const epics = [
 export const ns = 'matches';
 export const types = createTypes([ 
   'onRouteMatches',
-  'loadMatches',
+  createAsyncTypes('loadMatches')
 ], ns);
 
 export const routesMap = {
@@ -22,10 +23,11 @@ export const routesMap = {
 };
 
 export const onRouteMatches = createAction(types.onRouteMatches);
-export const loadMatches = createAction(types.loadMatches);
+export const loadMatches = createAction(types.loadMatches.start);
+export const loadMatchesComplete = createAction(types.loadMatches.complete);
 
 const defaultState = {
-  validating: false
+  loaded: false
 };
 
 export default composeReducers(
@@ -40,10 +42,10 @@ export default composeReducers(
     return state;
   },
   handleActions(() => ({
-    [types.changePrediction]: (state, { payload }) => ({
+    [types.loadMatches.complete]: (state, { payload: matches }) => ({
       ...state,
-      validating: false
-    })
+      loaded: true
+    }),
   }),
     defaultState
   )

@@ -16,18 +16,21 @@ import {
 } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax'
 import { push, redirect } from 'redux-first-router';
+import { onRouteMatches, loadMatchesComplete } from './';
 
 function loadMatchesEpic(action$) {
-  return action$.pipe(
-    ofType(types.loadMatches),
+  const loadMatches$ = action$.pipe(
+    ofType(types.loadMatches.start),
     tap(_ => console.log('loadMatches')),
     delay(1000),
-    map(res => {
-      return { type: 'loadMatchesComplete', payload: [] }
-    }),
-    catchError(createErrorObservable)
-  )
-}
+    mapTo(loadMatchesComplete([])),
+    catchError(createErrorObservable))
 
+  const gotoRouteMatches$ = action$.pipe(
+    ofType(types.loadMatches.complete),
+    mapTo(onRouteMatches({ query: { league: 'epl' } })))
+
+  return merge(loadMatches$, gotoRouteMatches$)
+}
 
 export default combineEpics(loadMatchesEpic)

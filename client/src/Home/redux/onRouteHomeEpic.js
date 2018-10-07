@@ -7,14 +7,14 @@ import {
 import { of } from 'rxjs';
 
 import { push, redirect } from 'redux-first-router';
-import { onRouteMatches } from '../../Matches/redux';
+import { loadMatches } from '../../Matches/redux';
 
 function onRouteHomeEpic(action$) {
   return action$.pipe(
     ofType(types.onRouteHome),
     tap((action) => console.log('homeEpic', action)),
     map(() => {
-      return onRouteMatches()
+      return loadMatches();
     })
   )
 }

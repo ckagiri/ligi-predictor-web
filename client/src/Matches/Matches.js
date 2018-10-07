@@ -9,11 +9,17 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => {
+  const matchesLoaded = state.matches.loaded
+  return {
+    matchesLoaded
+  };
 };
 
 class Matches extends Component {
   componentDidMount() {
-    this.props.loadMatches();
+    if(!this.props.matchesLoaded) {
+      this.props.loadMatches();
+    }
   }
 
   render() {
@@ -22,6 +28,6 @@ class Matches extends Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Matches);
