@@ -1,10 +1,14 @@
+import Home from '../Home';
 import Matches from '../Matches';
-import { ns as homeNS, routesMap as homeRoutes } from '../Matches/redux';
+import { ns as homeNs, routesMap as homeRoutes } from '../Home/redux';
+import { ns as matchesNS, routesMap as matchesRoutes } from '../Matches/redux';
 
 export default {
-  ...homeRoutes
+  ...homeRoutes,
+  ...matchesRoutes
 };
 
 export const nsToComponent = {
-  [homeNS]: Matches
+  [homeNs]: Home,
+  [matchesNS]: Matches
 };

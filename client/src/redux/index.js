@@ -22,8 +22,6 @@ export const epics = [
 ];
 
 export const types = createTypes([
-  'onRouteHome',
-
   'appMounted',
 
   createAsyncTypes('loadUser'),
@@ -35,7 +33,6 @@ export const types = createTypes([
   'hardGoTo'
 ], ns);
 
-export const onRouteHome = createAction(types.onRouteHome);
 export const appMounted = createAction(types.appMounted);
 
 export const loadUser = createAction(types.loadUser.start);

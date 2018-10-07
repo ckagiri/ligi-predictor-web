@@ -12,10 +12,11 @@ export const epics = [
 ];
 
 export const ns = 'matches';
-export const types = createTypes([ 'onRouteMatches' ], ns);
+export const types = createTypes([ 
+  'onRouteMatches' ], ns);
 
 export const routesMap = {
-  [types.onRouteMatches]: '/',
+  [types.onRouteMatches]: '/matches',
 };
 
 export const onRouteMatches = createAction(types.onRouteMatches);
