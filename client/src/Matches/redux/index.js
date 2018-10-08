@@ -6,7 +6,7 @@ import {
   handleActions  } from 'redux-vertical';
 import { isLocationAction } from 'redux-first-router';
 
-import loadMatchesEpic from './load-matches-epic';
+import loadMatchesEpic from './matches-epic';
 
 export const epics = [
   loadMatchesEpic
@@ -15,6 +15,7 @@ export const epics = [
 export const ns = 'matches';
 export const types = createTypes([ 
   'onRouteMatches',
+  'loadRoute',
   createAsyncTypes('loadMatches')
 ], ns);
 
@@ -23,6 +24,7 @@ export const routesMap = {
 };
 
 export const onRouteMatches = createAction(types.onRouteMatches);
+export const loadRoute = createAction(types.loadRoute);
 export const loadMatches = createAction(types.loadMatches.start);
 export const loadMatchesComplete = createAction(types.loadMatches.complete);
 

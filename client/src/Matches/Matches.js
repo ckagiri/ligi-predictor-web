@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadMatches } from './redux';
+import { loadRoute } from './redux';
 
 const mapDispatchToProps = {
-  loadMatches
+  loadRoute
 };
 
 const mapStateToProps = state => {
@@ -17,7 +17,7 @@ const mapStateToProps = state => {
 
 class Matches extends Component {
   componentDidMount() {
-    this.props.loadMatches();
+    this.props.loadRoute();
   }
 
   render() {
