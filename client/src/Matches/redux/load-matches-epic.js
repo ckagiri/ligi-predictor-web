@@ -15,7 +15,7 @@ import {
   mapTo
 } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax'
-import { push, redirect } from 'redux-first-router';
+import { redirect } from 'redux-first-router';
 import { onRouteMatches, loadMatchesComplete } from './';
 
 function loadMatchesEpic(action$) {
@@ -28,7 +28,7 @@ function loadMatchesEpic(action$) {
 
   const gotoRouteMatches$ = action$.pipe(
     ofType(types.loadMatches.complete),
-    mapTo(onRouteMatches({ query: { league: 'epl' } })))
+    mapTo(redirect(onRouteMatches({ query: { league: 'epl' } }))))
 
   return merge(loadMatches$, gotoRouteMatches$)
 }

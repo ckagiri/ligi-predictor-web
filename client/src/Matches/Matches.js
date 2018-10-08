@@ -17,9 +17,7 @@ const mapStateToProps = state => {
 
 class Matches extends Component {
   componentDidMount() {
-    if(!this.props.matchesLoaded) {
-      this.props.loadMatches();
-    }
+    this.props.loadMatches();
   }
 
   render() {
