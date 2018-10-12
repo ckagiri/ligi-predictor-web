@@ -9,7 +9,7 @@ module.exports = function(app) {
   function getLeague(req, res, next) {
       const json = jsonFileService.getJsonFromFile(data + 'leagues.json');
       const league = json.filter(function(c) {
-          return c.id === parseInt(req.params.id);
+        return c.id === parseInt(req.params.id);
       });
       res.send(league[0]);
   }
@@ -17,8 +17,5 @@ module.exports = function(app) {
   function getLeagues(req, res, next) {
       const json = jsonFileService.getJsonFromFile(data + 'leagues.json');
       res.send(json);
-  }
-
-
-  
+  }  
 };
