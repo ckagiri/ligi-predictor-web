@@ -11,19 +11,24 @@ import {
   map,
   catchError, 
   delay,
+  mergeMap,
   defaultIfEmpty,
   mapTo
 } from 'rxjs/operators';
 import { redirect } from 'redux-first-router';
 import { loadMatches, loadMatchesComplete } from '.';
 
+import { leaguesService } from '../../dataservices/leagues-service';
+
 function loadMatchesEpic(action$) {
   return action$.pipe(
     ofType(types.loadMatches.start),
     tap(_ => console.log('loadMatches')),
     delay(1000),
-    mapTo(loadMatchesComplete([])),
-    catchError(createErrorObservable));
+    mergeMap(() => leaguesService.getAll().pipe(
+      map(response => loadMatchesComplete(response)),
+      catchError(createErrorObservable))
+    ));
 }
 
 function loadRouteEpic(actions$) {

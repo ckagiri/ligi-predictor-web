@@ -28,13 +28,15 @@ export const loadRoute = createAction(types.loadRoute);
 export const loadMatches = createAction(types.loadMatches.start);
 export const loadMatchesComplete = createAction(types.loadMatches.complete);
 
-const defaultState = {
-  loaded: false
+const initialState = {
+  entities: {},
+  loaded: false,
+  loading: false
 };
 
 export default composeReducers(
   ns,
-  function matchesRouteReducer(state = defaultState, action) {
+  function matchesRouteReducer(state = initialState, action) {
     if (isLocationAction(action)) {
       const { type } = action;
       if (type === types.onRouteMatches) {
@@ -43,12 +45,26 @@ export default composeReducers(
     }
     return state;
   },
-  handleActions(() => ({
-    [types.loadMatches.complete]: (state, { payload: matches }) => ({
-      ...state,
-      loaded: true
+  handleActions(
+    () => ({
+      [types.loadMatches.complete]: (state, { payload: matches }) => {  
+        const entities = matches.reduce(
+          (entities, match) => {
+            return {
+              ...entities,
+              [match.id]: match 
+            }
+          }, {
+            ...state.entities
+          });
+        return {
+          ...state,
+          loading: false,
+          loaded: true,
+          entities,
+        }
+      }
     }),
-  }),
-    defaultState
+    initialState
   )
 );
