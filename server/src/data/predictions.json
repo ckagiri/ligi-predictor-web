@@ -1,30 +1,58 @@
 [
   {
     "userId": 1,
-	  "fixtureId": "1",
-	"fixtureSlug": { type: String, trim: true },
-	"season": { type: ObjectId, ref: 'Season' },
-  "gameRound": { type: Number },
-	"choice": {
-		goalsHomeTeam: { type: Number },
-		goalsAwayTeam: { type: Number	},
-		isComputerGenerated: { type: Boolean, default: true }
-	},
-	"timestamp": { type: Schema.Types.Date,	default: Date.now() },
-	"scorePoints": {
-    points: { type: Number },
-    APoints: { type: Number },
-    BPoints: { type: Number },
-    MatchOutcomePoints: { type: Number },  
-    TeamScorePlusPoints: { type: Number },
-    GoalDifferencePoints: { type: Number },
-    ExactScorePoints: { type: Number },
-    TeamScoreMinusPoints: { type: Number }
+	  "fixtureId": "2",
+	  "fixtureSlug": "brighton-&-hove-albion-v-burnley",
+	  "seasonId": 1,
+    "gameRound": 10,
+    "matchRound": 10,
+	  "choice": {
+      "goalsHomeTeam": 1,
+      "goalsAwayTeam": 1,
+      "isComputerGenerated": false
+    },
+    "scorePoints": {
+      "points": 0,
+      "APoints": 0,
+      "BPoints": 0,
+      "MatchOutcomePoints": 0,
+      "GoalDifferencePoints": 0,
+      "ExactScorePoints": 0,
+  
+      "TeamScoreExactPoints": 0,
+      "TeamScoreMarginOnePoints": 0,
+      "DrawScoreMarginTwoPoints": 0
+    },
+    "hasJoker": true,
+    "jokerAutoPicked": false,
+    "status": "PENDING"
   },
-	"hasJoker": { type: Boolean, default: false },
-	"jokerAutoPicked": { type: Boolean, default: false },
-  "status: {
-    type: String,
-    enum: ['PENDING', 'PROCESSED'],
-		default: 'PENDING'
-  }});
+  {
+    "userId": 1,
+	  "fixtureId": "1",
+	  "fixtureSlug": "arsenal-v-bournemouth",
+	  "seasonId": 1,
+    "gameRound": 10,
+    "matchRound": 10,
+	  "choice": {
+      "goalsHomeTeam": 3,
+      "goalsAwayTeam": 1,
+      "isComputerGenerated": false
+    },
+    "scorePoints": {
+      "points": 0,
+      "APoints": 0,
+      "BPoints": 0,
+      "MatchOutcomePoints": 0,
+      "GoalDifferencePoints": 0,
+      "ExactScorePoints": 0,
+  
+      "TeamScoreExactPoints": 0,
+      "TeamScoreMarginOnePoints": 0,
+      "DrawScoreMarginTwoPoints": 0
+    },
+    "hasJoker": false,
+    "jokerAutoPicked": false,
+    "status": "PENDING"
+  }
+]

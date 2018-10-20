@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "seasonId": 1,
     "slug": "arsenal-v-bournemouth",
     "matchRound": 1,
@@ -15,6 +16,7 @@
     "venue": "Hawthorns"
   },
   {
+    "id": 2,
     "seasonId": 1,
     "slug": "brighton-&-hove-albion-v-burnley",
     "matchRound": 1,
