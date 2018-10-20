@@ -5,14 +5,11 @@ import { ofType, combineEpics } from 'redux-observable';
 import { createErrorObservable } from '../../redux';
 import { types, onRouteMatches } from '.';
 import {
-  switchMap,
   tap,
-  filter,
   map,
   catchError, 
   delay,
   mergeMap,
-  defaultIfEmpty,
   mapTo
 } from 'rxjs/operators';
 import { redirect } from 'redux-first-router';

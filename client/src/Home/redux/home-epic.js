@@ -1,10 +1,9 @@
 import { ofType, combineEpics } from 'redux-observable';
-import { types } from './';
+import { types } from '.';
 import {
   tap,
   map
 } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { redirect } from 'redux-first-router';
 import { onRouteMatches } from '../../Matches/redux';
 

@@ -1,6 +1,6 @@
 
 import { createTypes, createAction } from 'redux-vertical';
-import onRouteHomeEpic from './onRouteHomeEpic';
+import onRouteHomeEpic from './home-epic';
 
 export const epics = [
   onRouteHomeEpic

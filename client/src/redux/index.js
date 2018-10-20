@@ -9,10 +9,10 @@ import {
 } from 'redux-vertical';
 import { createSelector } from 'reselect';
 
-import loadUserEpic from './user-epics';
+import loadUserEpic from './user-epic';
 
 import { paramsSelector } from '../Router/redux';
-import hardGoToEpic from './hard-go-to-epic';
+import hardGoToEpic from './location-epic';
 
 const ns = 'app';
 
