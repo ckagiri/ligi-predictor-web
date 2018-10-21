@@ -6,7 +6,7 @@ import {
   createAsyncTypes,
   handleActions  } from 'redux-vertical';
 import { isLocationAction } from 'redux-first-router';
-
+import { createSelector } from 'reselect';
 import loadMatchesEpic from './matches-epic';
 
 export const epics = [
@@ -14,6 +14,7 @@ export const epics = [
 ];
 
 export const ns = 'matches';
+export const getNS = state => state[ns];
 export const types = createTypes([ 
   'onRouteMatches',
   'loadRoute',
@@ -45,22 +46,24 @@ export const fetchSeasonEntities = createAction(types.fetchSeasonEntities.start)
 export const fetchSeasonEntitiesComplete = createAction(types.fetchSeasonEntities.complete);
 export const selectGameRound = createAction(types.selectGameRound);
 
-    // fetchLeagues()
-    // fetchLeagues.start
-    // hasLeagueUrl 
-    // y -> selectLeague
-    // n -> fetchDefaultLeague -> selectLeague
-    // selectLeague.start
-    // loading?
-    // fetchSeasons
-    // hasSeasonUrl
-    // y -> selectSeason
-    // n -> getCurrentSeason
-    // selectSeason.start
-    // fetchSeason
-    // fetchSeason.complete
-    // loadMatches.complete
+export const selectedLeagueSelector = createSelector(
+  state => getNS(state).selectedLeagueSlug,
+  state => getNS(state).leagues,
+  (leagueSlug, leagueMap) => leagueMap[leagueSlug] || {}
+);
 
+export const selectedSeasonSelector = createSelector(
+  state => getNS(state).selectedLeagueSlug,
+  state => getNS(state).selectedSeasonId,
+  state => getNS(state).seasons,
+  (leagueSlug, seasonId, leagueSeasonsMap) => {
+    const seasons = leagueSeasonsMap[leagueSlug];
+    const season = seasons.filter(n => n.id === seasonId)[0];
+    return season;
+  }
+)
+
+export const selectedGameRoundSelector = state => getNS(state).selectedGameRound;
 
 const defaultState = {
   leagues: {},
@@ -110,25 +113,25 @@ export default handleActions(
     },
     [types.selectLeague]: (state, { payload: leagueSlug }) => ({
       ...state,
-      selectedLeague: leagueSlug
+      selectedLeagueSlug: leagueSlug
     }),
     [types.fetchSeasons.complete]: (state, { payload: { leagueSlug, seasons } }) => ({
       ...state,
-      leagues: { 
-        ...state.leagues, 
+      seasons: { 
+        ...state.seasons, 
         [leagueSlug]: seasons 
       }
     }),
     [types.selectSeason]: (state, { payload: { leagueSlug, seasonSlug } }) => {
-      const { [leagueSlug]: seasons } = state.leagues;
+      const { [leagueSlug]: seasons } = state.seasons;
       const selected = seasons.filter(n => n.slug === seasonSlug)[0];
-      const selectedSeasonId = selected & selected.id;
+      const selectedSeasonId = selected && selected.id;
       return {
         ...state,
         selectedSeasonId
       }
     },
-    [types.fetchSeasons.complete]: (state, { payload: { seasonId, fixtures, teams, predictions }}) =>  ({  
+    [types.fetchSeasonEntities.complete]: (state, { payload: { seasonId, fixtures, teams, predictions }}) =>  ({  
       ...state,
       teams: {
         ...state.teams,
@@ -142,7 +145,11 @@ export default handleActions(
         ...state.predictions,
         [seasonId]: predictions
       }
-    })
+    }), 
+    [types.selectGameRound]: (state, { payload: gameRound }) => ({
+      ...state,
+      selectedGameRound: gameRound
+    }),
   }),
   defaultState,
   ns

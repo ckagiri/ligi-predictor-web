@@ -29,8 +29,9 @@ export class  DataService {
     return this.execute('GET_BY_ID', `${this.addSlash(this.entitiesUrl)}` + id, err, params);
   }
 
-  getAll(params) {
-    return this.execute('GET_LIST', this.entitiesUrl, undefined, params);
+  getAll(params, pathSuffix='') {
+    const entitiesUrl = this.entitiesUrl + pathSuffix;
+    return this.execute('GET_ALL', entitiesUrl, undefined, params);
   }
 
   getList(params, pathSuffix='') {
@@ -74,6 +75,7 @@ export class  DataService {
     }
 
     switch (method) {
+      case 'GET_ALL':
       case 'GET_LIST':
       case 'GET_BY_ID':
       case 'GET_ONE':

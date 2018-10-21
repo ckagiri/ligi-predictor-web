@@ -21,10 +21,13 @@ import {
   fetchLeagues,
   fetchLeaguesComplete,
   selectLeague,
-  fetchSeasons,
   fetchSeasonsComplete,
   selectSeason,
-  fetchSeasonEntitiesComplete
+  fetchSeasonEntitiesComplete,
+  selectGameRound,
+  selectedLeagueSelector, 
+  selectedSeasonSelector,
+  selectedGameRoundSelector
 } from '.';
 
 import { leagueDataService, seasonDataService } from '../../dataservices';
@@ -39,7 +42,6 @@ function loadMatchesEpic(action$, state$) {
     ofType(types.fetchLeagues.start),
     mergeMap(() => leagueDataService.fetchLeagues().pipe(
       map(response => fetchLeaguesComplete(response)),
-      // Todo: handle server-error
       catchError(doActionOnError(error => loadMatchesError(error)))
     )))
 
@@ -51,15 +53,13 @@ function loadMatchesEpic(action$, state$) {
       return selectLeague(leagueSlug);
     }))
 
-
   const fetchSeasons$ = action$.pipe(
     ofType(types.selectLeague),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const leagueSlug = 'english-premier-league';
       return seasonDataService.fetchSeasons(leagueSlug).pipe(
-        map(response => fetchSeasonsComplete(response)),
-        // Todo: handle server-error
+        map(response => fetchSeasonsComplete({ leagueSlug, seasons: response})),
         catchError(doActionOnError(error => loadMatchesError(error))))
     }))
     
@@ -71,31 +71,48 @@ function loadMatchesEpic(action$, state$) {
       const seasonSlug = '18-19';
       return selectSeason({ leagueSlug, seasonSlug });
     }))
-  
 
   const fetchSeasonEntities$ = action$.pipe(
     ofType(types.selectSeason),
     withLatestFrom(state$),
-    mergeMap(([action, state]) => {
-      const leagueSlug = 'english-premier-league';
-      return seasonDataService.fetchSeasonEntities(leagueSlug).pipe(
-        map(response => fetchSeasonEntitiesComplete(response)),
-        // Todo: handle server-error
+    mergeMap(([_, state]) => {
+      const leagueSlug = selectedLeagueSelector(state).slug;
+      const selectedSeason = selectedSeasonSelector(state);
+      const { id: seasonId, slug: seasonSlug } = selectedSeason;
+      return seasonDataService.fetchSeasonEntities(leagueSlug, seasonSlug).pipe(
+        map(response => fetchSeasonEntitiesComplete({ seasonId, ...response })),
         catchError(doActionOnError(error => loadMatchesError(error))))
     }))
 
-  return merge(loadMatches$, fetchLeagues$, selectLeague$, 
-    fetchSeasons$, selectSeason$, fetchSeasonEntities$);
-}
+  const selectGameRound$ = action$.pipe(
+    ofType(types.fetchSeasonEntities.complete),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      return selectGameRound(1);
+    }));
 
-function loadRouteEpic(action$) {
+  const loadMatchesComplete$ = action$.pipe(
+    ofType(types.selectGameRound),
+    mapTo(loadMatchesComplete()));
+
+  return merge(loadMatches$, fetchLeagues$, selectLeague$, fetchSeasons$, 
+    selectSeason$, fetchSeasonEntities$, selectGameRound$, loadMatchesComplete$);
+  }
+
+function loadRouteEpic(action$, state$) {
   const loadMatches$ = action$.pipe(
     ofType(types.loadRoute),
     mapTo(loadMatches()));
 
   const redirect$ = action$.pipe(
     ofType(types.loadMatches.complete),
-    mapTo(redirect(onRouteMatches({ query: { league: "epl" }})))
+    withLatestFrom(state$),
+    map(([_, state]) => {
+      const league = selectedLeagueSelector(state).slug;
+      const season = selectedSeasonSelector(state).slug;
+      const round = selectedGameRoundSelector(state);
+      return redirect(onRouteMatches({ query: { league, season, round } }))
+    })
   )
 
   return merge(loadMatches$, redirect$);

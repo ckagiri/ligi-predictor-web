@@ -2,15 +2,15 @@ import { DataService } from './data-service';
 
 export class SeasonDataService extends DataService {
   constructor() {
-    super('Season', '/:leagueSlug/seasons', '/seasons')
+    super('Season', '/leagues/:leagueSlug/seasons', '/seasons')
   }
 
   fetchSeasons(leagueSlug) {
-    return super.getList({ leagueSlug });
+    return super.getAll({ leagueSlug });
   }
 
-  fetchSeasonEntities(leagueSlug) {
-    return super.getList({ leagueSlug }, '/entities')
+  fetchSeasonEntities(leagueSlug, seasonSlug) {
+    return super.getAll({ leagueSlug, seasonSlug }, '/:seasonSlug/entities')
   }
 }
 
