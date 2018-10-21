@@ -24,16 +24,16 @@ export const epics = [
 export const types = createTypes([
   createAsyncTypes('loadUser'),
   'noUserFound',
-
   'showSignIn',
-
   'handleError',
-  'hardGoTo'
+  'hardGoTo',
+  'setLoadingState'
 ], ns);
 
 export const loadUser = createAction(types.loadUser.start);
 export const loadUserComplete = createAction(types.loadUser.complete);
 export const noUserFound = createAction(types.noUserFound);
+export const setLoadingState = createAction(types.setLoadingState);
 
 export const hardGoTo = createAction(types.hardGoTo);
 

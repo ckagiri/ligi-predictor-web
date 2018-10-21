@@ -21,10 +21,6 @@ export class  DataService {
     this.httpClient = httpClient;
   }
 
-  getAll(params) {
-    return this.execute('GET_ALL', this.entitiesUrl, undefined, params);
-  }
-
   getById(id, params) {
     let err;
     if (id == null) {
@@ -33,16 +29,18 @@ export class  DataService {
     return this.execute('GET_BY_ID', `${this.addSlash(this.entitiesUrl)}` + id, err, params);
   }
 
-  getWithQuery(params) {
-    return this.execute('GET_WITH_QUERY', this.entitiesUrl, undefined, params);
-  }
-
-  getList(params) {
+  getAll(params) {
     return this.execute('GET_LIST', this.entitiesUrl, undefined, params);
   }
 
-  getOne(params) {
-    return this.execute('GET_ONE', this.entitiesUrl, undefined, params);    
+  getList(params, pathSuffix='') {
+    const entitiesUrl = this.entitiesUrl + pathSuffix;
+    return this.execute('GET_LIST', entitiesUrl, undefined, params);
+  }
+
+  getOne(params, pathSuffix='') {
+    const entitiesUrl = this.entitiesUrl + pathSuffix;
+    return this.execute('GET_ONE', entitiesUrl, undefined, params);    
   }
 
   add(entity, params) {
@@ -76,9 +74,7 @@ export class  DataService {
     }
 
     switch (method) {
-      case 'GET_ALL':
       case 'GET_LIST':
-      case 'GET_WITH_QUERY':
       case 'GET_BY_ID':
       case 'GET_ONE':
         break;
