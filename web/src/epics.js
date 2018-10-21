@@ -1,6 +1,6 @@
 import { epics as app } from './redux';
-import { epics as home } from './Home/redux';
-import { epics as matches } from './Matches/redux'
+import { epics as home } from './home/redux';
+import { epics as matches } from './matches/redux'
 
 export default [
   ...app,

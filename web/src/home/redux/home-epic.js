@@ -5,7 +5,7 @@ import {
   map
 } from 'rxjs/operators';
 import { redirect } from 'redux-first-router';
-import { onRouteMatches } from '../../Matches/redux';
+import { onRouteMatches } from '../../matches/redux';
 
 function onRouteHomeEpic(action$) {
   return action$.pipe(

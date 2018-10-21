@@ -30,5 +30,37 @@
       "goalsAwayTeam": 0
     },
     "venue": "Hawthorns"
+  },
+  {
+    "id": 3,
+    "seasonId": 1,
+    "slug": "arsenal-v-brighton-&-hove-albion",
+    "matchRound": 2,
+    "gameRound": 2,  
+    "date": "2018-08-18T00:00:00+0200",  
+    "homeTeamId": 1,
+    "awayTeamId": 3,
+    "status": "SCHEDULED",
+    "result": {
+      "goalsHomeTeam": 0,
+      "goalsAwayTeam": 0
+    },
+    "venue": "Hawthorns"
+  },
+  {
+    "id": 4,
+    "seasonId": 1,
+    "slug": "bournemouth-v-burnley",
+    "matchRound": 2,
+    "gameRound": 2,  
+    "date": "2018-08-18T00:00:00+0200",  
+    "homeTeamId": 2,
+    "awayTeamId": 4,
+    "status": "SCHEDULED",
+    "result": {
+      "goalsHomeTeam": 0,
+      "goalsAwayTeam": 0
+    },
+    "venue": "Hawthorns"
   }
 ]

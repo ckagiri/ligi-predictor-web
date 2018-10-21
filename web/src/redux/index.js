@@ -11,7 +11,7 @@ import { createSelector } from 'reselect';
 
 import loadUserEpic from './user-epic';
 
-import { paramsSelector } from '../Router/redux';
+import { paramsSelector } from '../router/redux';
 import hardGoToEpic from './location-epic';
 
 const ns = 'app';

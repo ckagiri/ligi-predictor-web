@@ -2,9 +2,9 @@ import { isLocationAction } from 'redux-first-router';
 import { combineReducers } from 'redux-vertical';
 import { addNS } from 'redux-vertical';
 
-import { ns as homeNs, routesMap as homeRoutes } from '../../Home/redux';
-import matchesReducer from '../../Matches/redux';
-import { ns as matchesNs, routesMap as matchesRoutes } from '../../Matches/redux';
+import { ns as homeNs, routesMap as homeRoutes } from '../../home/redux';
+import matchesReducer from '../../matches/redux';
+import { ns as matchesNs, routesMap as matchesRoutes } from '../../matches/redux';
 
 export const ns = 'mainRouter';
 export const mainRouterSelector = state => state[ns];

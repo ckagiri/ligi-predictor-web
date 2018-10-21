@@ -27,7 +27,7 @@ import {
   selectGameRound,
   selectedLeagueSelector, 
   selectedSeasonSelector,
-  selectedGameRoundSelector
+  selectedRoundSelector
 } from '.';
 
 import { leagueDataService, seasonDataService } from '../../dataservices';
@@ -110,7 +110,7 @@ function loadRouteEpic(action$, state$) {
     map(([_, state]) => {
       const league = selectedLeagueSelector(state).slug;
       const season = selectedSeasonSelector(state).slug;
-      const round = selectedGameRoundSelector(state);
+      const round = selectedRoundSelector(state);
       return redirect(onRouteMatches({ query: { league, season, round } }))
     })
   )

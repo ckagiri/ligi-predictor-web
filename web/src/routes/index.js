@@ -1,7 +1,7 @@
-import Home from '../Home';
-import Matches from '../Matches';
-import { ns as homeNs, routesMap as homeRoutes } from '../Home/redux';
-import { ns as matchesNS, routesMap as matchesRoutes } from '../Matches/redux';
+import Home from '../home';
+import Matches from '../matches';
+import { ns as homeNs, routesMap as homeRoutes } from '../home/redux';
+import { ns as matchesNS, routesMap as matchesRoutes } from '../matches/redux';
 
 export default {
   ...homeRoutes,

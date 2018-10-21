@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { loadRoute } from './redux';
+import MatchList from './MatchList';
+import { getNS, loadRoute } from '../redux';
 
 const mapDispatchToProps = {
   loadRoute
 };
 
+
 const mapStateToProps = state => {
-  const matchesLoaded = state.matches.loaded
+  const isLoading = getNS(state).loading;
+  const league = getNS(state).selectedLeagueSlug;
   return {
-    matchesLoaded
+    isLoading,
+    league
   };
 };
 
@@ -21,7 +24,11 @@ class Matches extends Component {
   }
 
   render() {
-    return (<div>Ligi Predictor Matches</div>);
+    const { isLoading, league } = this.props;
+    if (isLoading) {
+			return <p>Loading...</p>
+    }   
+    return league && <MatchList />;
   }
 }
 

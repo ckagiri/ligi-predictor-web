@@ -63,7 +63,20 @@ export const selectedSeasonSelector = createSelector(
   }
 )
 
-export const selectedGameRoundSelector = state => getNS(state).selectedGameRound;
+export const selectedRoundSelector = state => getNS(state).selectedGameRound;
+export const seasonFixturesSelector = state => {
+  const seasonId = selectedSeasonSelector(state).id;
+  const seasonFixturesMap = getNS(state).fixtures;
+  const fixtures = seasonFixturesMap[seasonId];
+  return fixtures;
+}
+
+export const roundFixturesSelector = createSelector(
+  [seasonFixturesSelector, selectedRoundSelector],
+  (fixtures, round) => {
+    return fixtures.filter(f => f.gameRound == round);
+  }
+)
 
 const defaultState = {
   leagues: {},

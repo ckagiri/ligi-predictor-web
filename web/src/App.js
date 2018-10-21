@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NotFound } from './NotFound';
+import { NotFound } from './not-found';
 
 import { nsToComponent } from './routes';
 import { mainRouterSelector } from './routes/redux';
 
 
-import { routesMapSelector } from './Router/redux';
-import { paramsSelector } from './Router/redux';
-import { querySelector } from './Router/redux';
+import { routesMapSelector } from './router/redux';
+import { paramsSelector } from './router/redux';
+import { querySelector } from './router/redux';
 import { selectLocationState } from 'redux-first-router';
 
 import {
