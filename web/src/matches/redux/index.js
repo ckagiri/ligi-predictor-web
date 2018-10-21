@@ -20,11 +20,12 @@ export const types = createTypes([
   'loadRoute',
   'selectLeague',
   'selectSeason',
-  'selectGameRound',
+  'setGameRound',
   createAsyncTypes('loadMatches'),
   createAsyncTypes('fetchLeagues'),
   createAsyncTypes('fetchSeasons'),
-  createAsyncTypes('fetchSeasonEntities')
+  createAsyncTypes('fetchSeasonEntities'),
+  createAsyncTypes('selectGameRound')
 ], ns);
 
 export const routesMap = {
@@ -44,7 +45,9 @@ export const fetchSeasonsComplete = createAction(types.fetchSeasons.complete);
 export const selectSeason = createAction(types.selectSeason);
 export const fetchSeasonEntities = createAction(types.fetchSeasonEntities.start);
 export const fetchSeasonEntitiesComplete = createAction(types.fetchSeasonEntities.complete);
-export const selectGameRound = createAction(types.selectGameRound);
+export const setGameRound = createAction(types.setGameRound);
+export const selectGameRound = createAction(types.selectGameRound.start);
+export const selectGameRoundComplete = createAction(types.selectGameRound.complete);
 
 export const selectedLeagueSelector = createSelector(
   state => getNS(state).selectedLeagueSlug,
@@ -159,7 +162,7 @@ export default handleActions(
         [seasonId]: predictions
       }
     }), 
-    [types.selectGameRound]: (state, { payload: gameRound }) => ({
+    [ combineActions(types.setGameRound, types.selectGameRound.complete) ]: (state, { payload: gameRound }) => ({
       ...state,
       selectedGameRound: gameRound
     }),

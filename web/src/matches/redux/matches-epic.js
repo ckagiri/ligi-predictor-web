@@ -11,9 +11,12 @@ import {
   delay,
   mergeMap,
   withLatestFrom,
+  ignoreElements,
   mapTo
 } from 'rxjs/operators';
-import { redirect } from 'redux-first-router';
+import { redirect, replace } from 'redux-first-router';
+import { stringify as queryString } from 'query-string';
+ 
 import { 
   loadMatches, 
   loadMatchesComplete, 
@@ -24,13 +27,35 @@ import {
   fetchSeasonsComplete,
   selectSeason,
   fetchSeasonEntitiesComplete,
-  selectGameRound,
+  setGameRound,
+  selectGameRoundComplete,
   selectedLeagueSelector, 
   selectedSeasonSelector,
   selectedRoundSelector
 } from '.';
-
+import { 
+  paramsSelector, pathnameSelector, querySelector, locationTypeSelector, routesMapSelector 
+} from '../../router/redux';
 import { leagueDataService, seasonDataService } from '../../dataservices';
+
+function loadRouteEpic(action$, state$) {
+  const loadMatches$ = action$.pipe(
+    ofType(types.loadRoute),
+    mapTo(loadMatches()));
+
+  const redirect$ = action$.pipe(
+    ofType(types.loadMatches.complete),
+    withLatestFrom(state$),
+    map(([_, state]) => {
+      const league = selectedLeagueSelector(state).slug;
+      const season = selectedSeasonSelector(state).slug;
+      const round = selectedRoundSelector(state);
+      return redirect(onRouteMatches({ query: { league, season, round } }))
+    })
+  )
+
+  return merge(loadMatches$, redirect$);
+}
 
 function loadMatchesEpic(action$, state$) {
   const loadMatches$ = action$.pipe(
@@ -84,38 +109,34 @@ function loadMatchesEpic(action$, state$) {
         catchError(doActionOnError(error => loadMatchesError(error))))
     }))
 
-  const selectGameRound$ = action$.pipe(
+  const setGameRound$ = action$.pipe(
     ofType(types.fetchSeasonEntities.complete),
     withLatestFrom(state$),
     map(([action, state]) => {
-      return selectGameRound(1);
+      return setGameRound(1);
     }));
 
   const loadMatchesComplete$ = action$.pipe(
-    ofType(types.selectGameRound),
+    ofType(types.setGameRound),
     mapTo(loadMatchesComplete()));
 
   return merge(loadMatches$, fetchLeagues$, selectLeague$, fetchSeasons$, 
-    selectSeason$, fetchSeasonEntities$, selectGameRound$, loadMatchesComplete$);
-  }
-
-function loadRouteEpic(action$, state$) {
-  const loadMatches$ = action$.pipe(
-    ofType(types.loadRoute),
-    mapTo(loadMatches()));
-
-  const redirect$ = action$.pipe(
-    ofType(types.loadMatches.complete),
-    withLatestFrom(state$),
-    map(([_, state]) => {
-      const league = selectedLeagueSelector(state).slug;
-      const season = selectedSeasonSelector(state).slug;
-      const round = selectedRoundSelector(state);
-      return redirect(onRouteMatches({ query: { league, season, round } }))
-    })
-  )
-
-  return merge(loadMatches$, redirect$);
+    selectSeason$, fetchSeasonEntities$, setGameRound$, loadMatchesComplete$);
 }
 
-export default combineEpics(loadRouteEpic, loadMatchesEpic)
+
+function gameRoundEpic(action$, state$) {
+  return action$.pipe(
+    ofType(types.selectGameRound.start),
+    withLatestFrom(state$),
+    map(([action, state]) => {
+      const pathname = pathnameSelector(state);
+      const query = querySelector(state);
+      const round = +query.round === 1 ? 2 : 1;
+      const search = `?${queryString({ ...query, round })}`;
+      replace(pathname+search)
+      return selectGameRoundComplete(round);
+    }))
+}
+
+export default combineEpics(loadRouteEpic, loadMatchesEpic, gameRoundEpic)
